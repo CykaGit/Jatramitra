@@ -1,0 +1,101 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Ticket Final</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> -->
+
+  <link rel="stylesheet" href="{% static 'ticket.css' %}">
+
+
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-left">
+          <header class="header">
+             <img style="height: 30% ; width: 30%;" src="{% static 'jatra_logo.png' %}"/>
+            <!-- <h5>JATRAMITRA</h5> -->
+            
+            <h5>INDIAN RAILWAYS</h5>
+          </header>
+          <main>
+            <div class="barcode">
+              <img src="https://www.freepnglogos.com/uploads/barcode-png/barcode-laser-code-vector-graphic-pixabay-3.png" />
+            </div>
+            <section class="main-details">
+              {% for detail in details %}
+              <p><span class="heading"> Passenger</span><br/>{{detail.name}}</p>{% endfor %}
+              <div class="centered">
+                <p><span class="heading"> From</span><br />{{a.dep_station.station_name}}</p> &#8594;
+                 <p><span class="heading"> To</span><br /> {{a.dep_station.station_name}}</p>
+                <p><span class="heading"> Date</span><br /> {{date}}</p>
+              </div>
+                     
+              <div class="flight-details">
+                 <p><span class="heading"> Train</span><br/>{{a.train_name}}</p> 
+                 <p><span class="heading"> Berth</span><br/> {{detail.berth}} </p>{% endfor %}
+              </div>
+              <h5>Happy Journey !</h5>
+            </section>
+          </main>
+        </div>
+        <div class="card-right">
+          <header class="header">
+            <img style="height: 50%; width: 50%;" src="{% static 'jatra_logo.png' %}"/>
+            <!-- <h5>JATRAMITRA</h5> -->
+          </header>
+          <main class="main">
+            {% for detail in details %}
+            <div class="centered">
+              <p><span class="heading"> Passenger</span><br/>{{detail.name}}</p>
+              <p><span class="heading"> Berth</span><br/>{{detail.berth}}</p>
+            </div>
+            {% endfor %}
+            
+            <div class="centered">
+                <p><span class="heading"> From</span><br />{{a.dep_station.station_name}} </p> &#8594;
+                 <p><span class="heading"> To</span><br />{{a.arv_station.station_name}}</p>
+              </div> 
+            <div class="centered">
+              <p><span class="heading"> Train</span><br />{{a.train_name}} </p> 
+                 <p><span class="heading"> Date/Time</span><br />{{date}}</p>
+            </div>
+          </main>
+        </div>
+        
+    </div>
+
+    
+    <div class="homegoing" >
+      <a href="/home"><span></span> <button  type="button" class="btn-danger" style="font-family: montserrat; margin-right: 100px;">Go Home</button></a>
+      <a href="/feedback/"><span></span> <button  type="button" class="btn-danger" style="font-family: montserrat;">Add a Review</button></a>
+    </div>
+    
+
+
+
+
+
+
+
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <!-- <script src="https://cdn.jsdelivr.net/ncpm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script> -->
+</body>
+
+</html>

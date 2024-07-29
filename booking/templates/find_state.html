@@ -1,0 +1,166 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Matching</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'find_state.css' %}" />
+  </head>
+
+  <body>
+    <div>
+      <!-- <div class="mx-3 mt-3" > -->
+      <div id="mydiv">
+        <form style="padding-top: 20px" class="row w-100" method="get">
+          <div class="col-12 ms-2 d-flex mb-3">
+            <input
+              type="text"
+              class="form-control ms-2"
+              id="text"
+              name="state_name"
+              placeholder="State name"
+              list="states_auto"
+              autocomplete="off"
+              required
+              minlength="1"
+              style="width: 250px; height: 33.6px" />
+            <datalist id="states_auto">
+              {% for x in states_auto %}
+              <option value="{{ x.state }}"></option>
+              {% endfor %}
+            </datalist>
+            <button type="submit" class="btn btn-danger ms-2">Search</button>
+            <a style="font-family: Cochin" class="navbar-brand" href="/home">
+              <img
+                src="{% static 'jatra_logo.png' %}"
+                alt="logo"
+                height="50px"
+                width="100px" />
+            </a>
+          </div>
+          </form>
+      </div>
+      {% if matching_title %}
+      <div class="mx-3 mt-3">
+          <div>
+            <!-- weather -->
+            <div class="row d-flex justify-content-center py-2">
+              <div class="col-md-8 col-lg-6 col-xl-5"
+                <div
+                  class="card text-body"
+                  style="border-radius: 35px; background-image: url(
+                  {{image}});">
+                  <div class="card-body p-4">
+                    <div class="d-flex">
+                      <h6>{{time}}</h6>
+                    </div>
+
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                      <h6 class="display-4 mb-0 font-weight-bold">
+                        {{temp}}°C
+                      </h6>
+                      <span class="small" style="color: #868b94">{{desc}}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                      <div class="flex-grow-1" style="font-size: 1rem">
+                        <div>
+                          <i
+                            class="fas fa-wind fa-fw"
+                            style="color: #868b94"></i>
+                          <span class="ms-1"> Wind Speed: </span>
+                          <span class="ms-1"> {{wind}} m/s </span>
+                        </div>
+                        <div>
+                          <i
+                            class="fas fa-tint fa-fw"
+                            style="color: #868b94"></i>
+                          <span class="ms-1"> Humidity:</span>
+                          <span class="ms-1"> {{humid}}% </span>
+                        </div>
+                        <div>
+                          <i
+                            class="fas fa-sun fa-fw"
+                            style="color: #868b94"></i>
+                          <span class="ms-1"> Feels Like:</span>
+                          <span class="ms-1">{{feels}}°C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- weather -->
+        <h1><b>{{matching_title.state}}</b></h1>
+        <h2 class="mx-3">{{ matching_title.state_capital }}</h2>
+        <div
+          id="carouselExample"
+          class="carousel slide w-50 float-end mx-4 my-4"
+          data-bs-ride="carousel">
+          <div class="carousel-inner">
+            {% for x in matching_title.imgs %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img
+                src="{{ matching_title.imgs.url }}"
+                class="d-block w-100 rounded-3"
+                alt="..." />
+            </div>
+            {% endfor %}
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <p>{{ matching_title.gnrl_desc|linebreaks }}</p>
+        <h2>Places to visit</h2>
+        <p>{{ matching_title.places_to_visit|linebreaks }}</p>
+        <h2>Best time to visit</h2>
+        <p>{{ matching_title.time_to_visit|linebreaks}}</p>
+        <h2>Climate</h2>
+        <p>{{ matching_title.climate|linebreaks}}</p>
+        <h2>Culture</h2>
+        <p>{{ matching_title.culture |linebreaks}}</p>
+        <h2>Famous foods</h2>
+        <p>{{ matching_title.famous_foods|linebreaks }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"></script>
+  </body>
+</html>

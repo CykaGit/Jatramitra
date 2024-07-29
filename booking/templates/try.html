@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Type Checker</title>
+    <script>
+        function checkCardType(cardNumber) {
+            var firstDigit = parseInt(cardNumber.charAt(0));
+            var firstTwoDigits = parseInt(cardNumber.substring(0, 2));
+            var firstThreeDigits = parseInt(cardNumber.substring(0, 3));
+            var firstFourDigits = parseInt(cardNumber.substring(0, 4));
+            if (firstDigit === 4) {
+                return 'Visa';
+            } else if (firstDigit === 3) {
+                return 'American Express';
+            }else if (firstDigit === 2 || firstDigit === 5) {
+                return 'Mastercard';}
+            else if (firstFourDigits === 6011 || (firstThreeDigits >= 644 && firstThreeDigits <= 649) || firstTwoDigits === 65) {
+                return 'Discover';}
+            else if (firstTwoDigits === 60 || firstTwoDigits === 65 || firstTwoDigits === 81 || firstTwoDigits === 82 || firstThreeDigits === 508) {
+                return 'RuPay';} 
+            else {
+                return 'Unknown';
+            }
+        }
+
+        function displayCardType() {
+            var cardNumber = document.getElementById('cardNumber').value;
+            var cardType = checkCardType(cardNumber);
+            document.getElementById('cardType').innerText = cardType;
+        }
+    </script>
+</head>
+<body>
+    <label for="cardNumber">Enter Card Number:</label>
+    <input type="text" id="cardNumber" minlength="16" maxlength="16" oninput="displayCardType()">
+    <span id="cardType"></span>
+</body>
+</html>

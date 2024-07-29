@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Edu+TAS+Beginner&family=Lora:ital,wght@1,500&display=swap');
+
+body {
+    background-color: #F6F1F1;
+    background-size: cover;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+h1 {
+    font-family: 'Lora';
+    background-color: #F6F1F1;
+    border-radius: 15px 15px 15px 15px;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+}
+
+p {
+    font-family: 'Edu TAS Beginner';
+    padding: 10px 10px 10px 10px;
+    background-color: #F6F1F1;
+    font-size: 150%;
+}
+
+
+h2 {
+    font-family: 'Agbalumo';
+}
+
+#mydiv {
+    margin-top: 10px;
+
+    border-radius: 30px 30px 30px 30px;
+    background: #343430;
+    box-shadow: 0 8px 32px 0 rgba(131, 48, 15, 0.281);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+}
+.btn-danger {
+    padding: 0.3em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-danger:before {
+    content: "";
+    background: linear-gradient(45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-btn-danger 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-btn-danger {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.btn-danger:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}

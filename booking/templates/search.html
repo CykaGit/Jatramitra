@@ -1,0 +1,154 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Home</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+
+</head>
+
+<body> 
+          <video autoplay muted loop play-inline width="100%" class="back-video"  >
+              <source  src="{% static 'Train.mp4' %}" type="video/mp4">
+          </video>
+          <nav class="navbar navbar-expand-lg bg-custom mx-auto mt-2">
+            <div style="width: 95%;" class="container-fluid">
+              <a class="navbar-brand" href="/home">
+                <img src="{% static 'jatra_logo.png' %}" alt="logo" height="50px" width="100px">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav  ms-auto">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/match"><button type="button" class="btn btn-danger">Going where?</button></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/signout"><button type="button" class="btn btn-danger">LOGOUT</button></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          {% for message in messages %}
+          <div class="alert alert-primary alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <strong>Okay!</strong> {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          {% endfor %}
+          <div class="find-trains">
+            <form class="form-style" method="post">
+                {% csrf_token %}
+                From:<input style="margin-left: 10px; margin-right: 10px; border-radius: 5px; height: 43.2px;" type="text" id="from_station" name="dep_station" list="stations1" placeholder="Station" autocomplete="off">
+                <datalist id="stations1">
+                    {% for station in stations %}
+                      <option value="{{station.station_name}}"></option>
+                    {% endfor %}
+                </datalist>
+                To: <input style="margin-left: 10px; margin-right: 10px; border-radius: 5px; height: 43.2px;" type="text" id="to_station" name="arv_station" list="stations2" placeholder="Station" autocomplete="off">
+                <datalist id="stations2">
+                    {% for station in stations %}
+                      <option value="{{station.station_name}}"></option>
+                    {% endfor %}
+                </datalist>
+                <!-- <input type="submit" id="submit-button"  value="Find Trains" formaction="search" disabled> -->
+                <button type="submit" id="submit-button" value="Find Trains" class="btn btn-danger" disabled>Find Trains</button>
+            </form>
+        </div>
+        <div class="table-stylin-box mt-2">
+            {% if trains %}
+            <table class="table-stylin">    
+                <thead>
+                    <tr>
+                        <th style="color: #fff;">Train Name</th>
+                        <th style="color: #fff;">Train Number</th>
+                        <th style="color: #fff;">Dep Timing</th>
+                        <th style="color: #fff;">Arv Timing</th>
+                        <th style="color: #fff;">Run On Days</th>
+                        <th style="color: #fff;">Seats Available</th>
+                        <th style="color: #fff;">Number Of seats</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for train in trains %}
+                        <tr>
+                            <td style="color: #fff;">{{ train.train_name }}</td>
+                            <td style="color: #fff;">{{ train.train_number }}</td>
+                            <td style="color: #fff;">{{ train.dep_time }}</td>
+                            <td style="color: #fff;">{{ train.arv_time }}</td>
+                            <td style="color: #fff;">{{ train.run_days }}</td>
+                            <td style="color: #fff;">{{ train.seats_avl }}</td>
+                            <td><form action="addinfo/{{train.id}}"><input style="border-radius: 5px;" type="number" name="seats" id="" placeholder="Number of seats"><button style="border-radius: 5px;border: 0px; background-color: #262526; margin-left: 30px; color: #fff;" role="link">Book</button></form></td>
+                        </tr>
+                        
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        {% endif %}
+        </div> 
+          
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+    <script>
+        function validateForm() {
+            var fromStationInput = document.getElementById("from_station");
+            var toStationInput = document.getElementById("to_station");
+            var fromStationValue = fromStationInput.value.trim();
+            var toStationValue = toStationInput.value.trim();
+
+            if (fromStationValue === "" || toStationValue === "") {
+                alert("Fill in both input fields");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+
+        // Add event listeners to enable/disable the submit button
+        var fromStationInput = document.getElementById("from_station");
+        var toStationInput = document.getElementById("to_station");
+        var submitButton = document.getElementById("submit-button");
+
+        fromStationInput.addEventListener("input", updateSubmitButton);
+        toStationInput.addEventListener("input", updateSubmitButton);
+
+        function updateSubmitButton() {
+            var fromStationValue = fromStationInput.value.trim();
+            var toStationValue = toStationInput.value.trim();
+
+            if (fromStationValue !== "" && toStationValue !== "") {
+                submitButton.removeAttribute("disabled");
+            } else {
+                submitButton.setAttribute("disabled", "true");
+            }
+        }
+    </script>
+</body>
+
+</html>
